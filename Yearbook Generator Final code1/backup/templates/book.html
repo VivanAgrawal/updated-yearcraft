@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yearcraft</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: auto;
+            color: #fff;
+        }
+
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 31px;
+            position: absolute;
+            top: 0;
+            width: 95%;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 250px;
+            height: 60px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* Introduction Section */
+        .intro {
+            text-align: center;
+            margin-top: 80px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            color: #fff;
+        }
+
+        .intro h1 {
+            font-size: 36px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            font-size: 18px;
+            color: #eee;
+            line-height: 1.6;
+        }
+
+        .intro img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Book Cover */
+        .book-cover {
+            width: 700px;
+            height: 500px;
+            background: linear-gradient(145deg, #3a7ca5, #2c5a7a);
+            border-radius: 20px;
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            margin-bottom: 30px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .book-cover:hover {
+            transform: translateY(-5px);
+            box-shadow: 25px 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .book {
+            width: 650px;
+            height: 450px;
+            position: relative;
+            perspective: 1200px;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .pages {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
+        }
+
+        .page {
+            width: 50%;
+            height: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            text-align: justify;
+            position: absolute;
+            overflow-y: auto;
+            backface-visibility: hidden;
+            background: #f0f4f8;
+            border-right: 1px solid #ddd;
+        }
+
+        .page.left-page {
+            transform-origin: right;
+        }
+
+        .page.right-page {
+            transform-origin: left;
+            left: 50%;
+        }
+
+        .page h2 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        .page p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        .page img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .page img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .navigation button {
+            background: #1e6091;
+            color: white;
+            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navigation button:hover {
+            background: #184e77;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .navigation button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo">
+        </div>
+        <div class="nav-links">
+            <a href="/signed_index">Home</a>
+            <a href="/view_yearbook">Memories</a>
+            <a href="/aboutus">About</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </div>
+
+    <!-- Introduction Section -->
+    <div class="intro">
+        <h1>Yearcraft Created</h1>
+        <p>Yearcraft is a place where you can store and revisit your favorite memories. Each month, you can add photos and texts to create a beautiful timeline of your year. Scroll through your memories and relive the moments that matter most.</p>
+    </div>
+
+    <!-- Book Cover -->
+    <div class="book-cover">
+        <div class="book">
+            <div class="pages" id="pages">
+                <div class="page left-page" id="leftPage"></div>
+                <div class="page right-page" id="rightPage"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+        <button id="downloadPdfBtn">Download PDF</button>
+    </div>
+
+    <script>
+        let memories = JSON.parse(localStorage.getItem("memories")) || {};
+        let months = Object.keys(memories);
+        let currentMonthIndex = 0;
+
+        function displayBook() {
+            if (months.length === 0) {
+                document.getElementById("leftPage").innerHTML = "<h2>No Memories Available</h2>";
+                document.getElementById("rightPage").innerHTML = "";
+                return;
+            }
+            
+            let month = months[currentMonthIndex];
+            const leftPage = document.getElementById("leftPage");
+            const rightPage = document.getElementById("rightPage");
+    
+            leftPage.innerHTML = `<h2>${month} Memories</h2>`;
+            rightPage.innerHTML = "";
+    
+            memories[month].images.forEach((imgSrc, index) => {
+                leftPage.innerHTML += `<p><strong>Photo ${index + 1}:</strong> ${memories[month].texts[index]}</p>`;
+                rightPage.innerHTML += `<img src="${imgSrc}" alt="${month} Photo ${index + 1}">`;
+            });
+        }
+        document.getElementById("prevBtn").addEventListener("click", function () {
+            if (currentMonthIndex > 0) {
+                currentMonthIndex--;
+                displayBook();
+            }
+        });
+    
+        document.getElementById("nextBtn").addEventListener("click", function () {
+            if (currentMonthIndex < months.length - 1) {
+                currentMonthIndex++;
+                displayBook();
+            }
+        });
+    
+        displayBook();
+    </script>
+
+    <!-- External Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+    document.getElementById("downloadPdfBtn").addEventListener("click", async function () {
+        const { jsPDF } = window.jspdf;
+        let pdf = new jsPDF('p', 'mm', 'a4');
+        let y = 20;
+        const allMonths = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+    
+        for (let i = 0; i < allMonths.length; i++) {
+            let month = allMonths[i];
+            if (i > 0) pdf.addPage();
+            pdf.setFontSize(18);
+            pdf.text(`${month} Memories`, 15, y);
+            y += 10;
+    
+            if (!memories[month] || memories[month].images.length === 0) {
+                pdf.setFontSize(12);
+                pdf.text("No Memories Recorded", 15, y);
+                y += 10;
+                continue;
+            }
+    
+            for (let j = 0; j < memories[month].images.length; j++) {
+                pdf.setFontSize(12);
+                pdf.text(`Photo ${j + 1}: ${memories[month].texts[j]}`, 15, y);
+                y += 10;
+    
+                let img = new Image();
+                img.src = memories[month].images[j];
+    
+                await new Promise((resolve) => {
+                    img.onload = function () {
+                        pdf.addImage(img, 'JPEG', 15, y, 70, 50);
+                        y += 60;
+                        if (y > 260 && j < memories[month].images.length - 1) {
+                            pdf.addPage();
+                            y = 20;
+                        }
+                        resolve();
+                    };
+                });
+            }
+        }
+    
+        // Generate a unique filename
+        let timestamp = Date.now();
+        let filename = `Yearcraft_Memories_${timestamp}.pdf`;
+    
+        // Convert PDF to Blob
+        let pdfBlob = pdf.output('blob');
+    
+        // Save the file locally for download
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(pdfBlob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    
+        // Send PDF to the server
+        let formData = new FormData();
+        formData.append("pdf", pdfBlob, filename);
+    
+        fetch('http://127.0.0.1:5000/save-pdf/', {  // Update if Flask runs on a different port
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("PDF saved successfully on the server!");
+            } else {
+                alert("Failed to save PDF on the server.");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+    
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yearcraft</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding-top: 50px;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .title {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+        .pdf-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .pdf-list li {
+            margin: 15px 0;
+            padding: 10px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 31px;
+            position: absolute;
+            top: 0;
+            width: 95%;
+            z-index: 1000;
+        }
+           
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 250px;
+            height: 60px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo">
+        </div>
+        <div class="nav-links">
+            <a href="/signed_index">Home</a>
+            <a href="/signed_contact">Contact</a>
+            <a href="/signed_aboutus">About</a>
+            <a href="/">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1 class="title">Your Yearbook PDFs</h1>
+
+        {% if pdf_files %}
+            <ul class="pdf-list">
+                {% for pdf in pdf_files %}
+                    <li>
+                        <span>{{ pdf }}</span>  <!-- Show only filename -->
+                        <a href="{{ url_for('download_pdf', filename=pdf) }}" class="download-btn">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No yearbook created yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yearcraft</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 31px;
+            position: absolute;
+            top: 0;
+            width: 95%;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+     
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo-container img {
+            width: 250px;
+            height: 60px;
+            margin-right: 10px;
+        }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0078d4, #0056a3);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero .cta-button {
+            padding: 12px 24px;
+            background: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            animation: fadeIn 2.5s ease-in-out;
+        }
+
+        .hero .cta-button:hover {
+            background: #ff3b2f;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Form Container */
+        .form-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Month Boxes */
+        .month-box {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .month-box:nth-child(odd) {
+            background: #f9f9f9; /* Light grey */
+        }
+
+        .month-box:nth-child(even) {
+            background: white; /* White */
+        }
+
+        .month-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .month-box h4 {
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        /* File Upload Section */
+        .file-upload {
+            margin-bottom: 15px;
+        }
+
+        .file-upload input[type="file"] {
+            display: none; /* Hide the default file input */
+        }
+
+        .file-upload label {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #1e6091;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-upload label:hover {
+            background: #184e77;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .file-upload label:active {
+            transform: translateY(0);
+        }
+
+        .file-upload textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+            margin-top: 10px;
+            background: #f9f9f9;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .file-upload textarea:focus {
+            border-color: #1e6091;
+            box-shadow: 0 0 8px rgba(30, 96, 145, 0.3);
+            outline: none;
+        }
+
+        /* Submit Button */
+        .submit-button {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .submit-button button {
+            padding: 15px 30px;
+            background: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .submit-button button:hover {
+            background: #0056a3;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo">
+        </div>
+        <div class="nav-links">
+            <a href="/signed_index">Home</a>
+            <a href="/signed_aboutus">About</a>
+            <a href="/signed_contact">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Create Your Yearbook</h1>
+        <p>Design a beautiful and memorable yearbook with our easy-to-use tools. Upload photos, add highlights, and choose from stunning templates.</p>
+        <button class="cta-button">Get Started</button>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <h2>Upload Your Memories</h2>
+        <form id="memoryForm">
+            <div id="monthsForm"></div>
+            <div class="submit-button">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const monthsForm = document.getElementById("monthsForm");
+
+        // Generate form fields for each month
+        months.forEach((month, index) => {
+            monthsForm.innerHTML += `
+                <div class="month-box">
+                    <h4>${month} Highlights</h4>
+                    <div class="file-upload">
+                        <label for="photos_${month}">Upload Photos</label>
+                        <input type="file" name="photos_${month}" id="photos_${month}" multiple>
+                        <div id="textboxes_${month}"></div>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Add event listener to file inputs to generate text boxes dynamically
+        months.forEach(month => {
+            const fileInput = document.querySelector(`[name='photos_${month}']`);
+            fileInput.addEventListener("change", function () {
+                const textboxesDiv = document.getElementById(`textboxes_${month}`);
+                textboxesDiv.innerHTML = ""; // Clear previous text boxes
+                Array.from(fileInput.files).forEach((file, index) => {
+                    textboxesDiv.innerHTML += `
+                        <textarea name="highlights_${month}_${index}" rows="2" placeholder="Enter description for ${file.name}"></textarea>
+                    `;
+                });
+            });
+        });
+
+        document.getElementById("memoryForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            let memories = {};
+
+            months.forEach(month => {
+                const files = document.querySelector(`[name='photos_${month}']`).files;
+                memories[month] = { texts: [], images: [] };
+
+                Array.from(files).forEach((file, index) => {
+                    const text = document.querySelector(`[name='highlights_${month}_${index}']`).value;
+                    memories[month].texts.push(text);
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        memories[month].images.push(e.target.result);
+                        localStorage.setItem("memories", JSON.stringify(memories));
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            // Redirect to the book page
+            setTimeout(() => {
+                location.href = "/book";
+            }, 1000);
+        });
+    </script>
+</body>
+</html>X
